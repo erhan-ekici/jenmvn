@@ -42,12 +42,27 @@ pipeline {
             }
         }
 
-        stage('Priting All Global Variables') {
-            steps {
-                sh """
-                env
-                """
-            }
-        }
+        
+	stage ('***** Paralel Stage *****'){
+		parallel {
+			stage ('P Stage 1 - Executing Shell'){
+				steps {
+					sh 'echo "Shell Command Execution Step"'
+				}
+			}
+			stage('P Stage 2 - Priting All Global Variables') {
+            			steps {
+                			sh """
+                			env
+                			"""
+            			}
+        		}
+			stage ('P Stage 3 - Executing Shell'){
+				steps {
+					sh 'echo "Shell Command Execution Step"'
+				}
+			}
+		}
+	}
     }
 }
